@@ -1,4 +1,4 @@
-:root {
+:global(:root) {
   --disk-1: #ef4444;
   --disk-2: #f59e0b;
   --disk-3: #f97316;
