@@ -1,11 +1,3 @@
-:global(:root) {
-  --disk-1: #ef4444;
-  --disk-2: #f59e0b;
-  --disk-3: #f97316;
-  --disk-4: #10b981;
-  --disk-5: #3b82f6;
-  --disk-6: #8b5cf6;
-}
 .disk {
   height: 28px;
   border-radius: 8px;
