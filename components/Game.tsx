@@ -316,6 +316,98 @@ export default function Game() {
         ) === idx
     );
 
+  // PRECOMPUTE callStack content to avoid complex inline JSX ternary parsing issues
+  const callStackContent = (() => {
+    if (recursionTrace.length === 0) {
+      return (
+        <div className={styles.callItem}>
+          <span className={styles.noActive}>
+            Click "Solve (Animate)" or "Step" to see recursion in action
+          </span>
+        </div>
+      );
+    }
+    if (activeStack.length === 0) {
+      return (
+        <div className={styles.callItem}>
+          <span className={styles.noActive}>
+            No active calls (completed or not started)
+          </span>
+        </div>
+      );
+    }
+    return activeStack.map((step, idx) => (
+      <div
+        key={idx}
+        className={`${styles.callItem} ${
+          idx === activeStack.length - 1 ? styles.activeCall : ""
+        }`}
+        style={{ paddingLeft: `${step.depth * 24}px` }}
+      >
+        <span className={styles.callText}>
+          {`${
+            "  ".repeat(step.depth)
+          }solve(n=${step.n}, from=Rod${step.from + 1}, to=Rod${step.to + 1}, aux=[${step.aux
+            .map((a) => `Rod${a + 1}`)
+            .join(", ")}])`}
+        </span>
+      </div>
+    ));
+  })();
+
+  // celebration modal inline styles
+  const overlayStyle: React.CSSProperties = {
+    position: "fixed",
+    inset: 0,
+    background: "rgba(0,0,0,0.6)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    zIndex: 9999,
+  };
+  const modalStyle: React.CSSProperties = {
+    background: "white",
+    color: "#111827",
+    padding: "28px",
+    borderRadius: 12,
+    maxWidth: 520,
+    width: "90%",
+    textAlign: "center",
+    boxShadow: "0 8px 30px rgba(0,0,0,0.35)",
+  };
+  const titleStyle: React.CSSProperties = {
+    fontSize: 20,
+    fontWeight: 800,
+    marginBottom: 8,
+  };
+  const emojiRowStyle: React.CSSProperties = {
+    fontSize: 42,
+    margin: "12px 0",
+  };
+  const btnRowStyle: React.CSSProperties = {
+    display: "flex",
+    gap: 12,
+    justifyContent: "center",
+    marginTop: 12,
+  };
+  const btnStyle: React.CSSProperties = {
+    padding: "8px 14px",
+    borderRadius: 8,
+    border: "none",
+    cursor: "pointer",
+    fontWeight: 700,
+  };
+  const primaryBtnStyle: React.CSSProperties = {
+    ...btnStyle,
+    background: "#10b981",
+    color: "white",
+  };
+  const secondaryBtnStyle: React.CSSProperties = {
+    ...btnStyle,
+    background: "#e5e7eb",
+    color: "#111827",
+  };
+
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Tower of Hanoi — Visual Recursive Demo</h1>
@@ -392,39 +484,7 @@ export default function Game() {
       <section className={styles.recursionViz}>
         <h2>Python Recursion Call Stack Visualization</h2>
         <div className={styles.callStack}>
-          {recursionTrace.length === 0 ? (
-            <div className={styles.callItem}>
-              <span className={styles.noActive}>
-                Click "Solve (Animate)" or "Step" to see recursion in action
-              </span>
-            </div>
-          ) : activeStack.length === 0 ? (
-            <div className={styles.callItem}>
-              <span className={styles.noActive}>
-                No active calls (completed or not started)
-              </span>
-            </div>
-          ) : (
-            activeStack.map((step, idx) => (
-              <div
-                key={idx}
-                className={`${styles.callItem} ${
-                  idx === activeStack.length - 1 ? styles.activeCall : ""
-                }`}
-                style={{ paddingLeft: `${step.depth * 24}px` }}
-              >
-                <span className={styles.callText}>
-                  {`${
-                    "  ".repeat(step.depth)
-                  }solve(n=${step.n}, from=Rod${
-                    step.from + 1
-                  }, to=Rod${step.to + 1}, aux=[${step.aux
-                    .map((a) => `Rod${a + 1}`)
-                    .join(", ")}])`}
-                </span>
-              </div>
-            ))
-          )}
+          {callStackContent}
         </div>
         <div className={styles.progressInfo}>
           <span>
@@ -443,6 +503,53 @@ export default function Game() {
           )}
         </div>
       </section>
+
+      {/* celebration modal */}
+      {solveResult && (
+        <div
+          style={overlayStyle}
+          // clicking outside will just reset and close the modal
+          onClick={() => {
+            resetGame();
+          }}
+        >
+          <div
+            style={modalStyle}
+            // stop propagation so clicks inside modal don't trigger overlay click
+            onClick={(e) => e.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+          >
+            <div style={titleStyle}>Congratulations!</div>
+            <div style={{ fontSize: 16, color: "#374151" }}>{solveResult}</div>
+            <div style={emojiRowStyle} aria-hidden>
+              🎉🎊✨
+            </div>
+            <div style={{ color: "#6b7280", fontSize: 14 }}>
+              Great job — you solved the puzzle.
+            </div>
+            <div style={btnRowStyle}>
+              <button
+                style={primaryBtnStyle}
+                onClick={() => {
+                  resetGame();
+                }}
+              >
+                Play again
+              </button>
+              <button
+                style={secondaryBtnStyle}
+                onClick={() => {
+                  // just close the modal and keep the solved board visible
+                  setSolveResult(null);
+                }}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
