@@ -1,0 +1,36 @@
+:root {
+  --disk-1: #ef4444;
+  --disk-2: #f59e0b;
+  --disk-3: #f97316;
+  --disk-4: #10b981;
+  --disk-5: #3b82f6;
+  --disk-6: #8b5cf6;
+}
+.disk {
+  height: 28px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+  transition: transform 0.3s ease;
+}
+
+.disk.selected {
+  animation: float 0.8s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(-32px);
+  }
+  50% {
+    transform: translateY(-56px);
+  }
+}
+.label {
+  font-size: 0.85rem;
+  padding: 0 6px;
+}

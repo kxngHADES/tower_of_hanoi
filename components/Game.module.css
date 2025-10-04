@@ -1,0 +1,132 @@
+.container {
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.title {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+.controls {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.number {
+  width: 60px;
+  margin-left: 6px;
+}
+.btn {
+  padding: 6px 10px;
+  background: #111827;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.playArea {
+  display: flex;
+  gap: 18px;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 18px 8px;
+  min-height: 220px;
+  border: 1px solid #e5e7eb80;
+  border-radius: 8px;
+}
+.tutorial {
+  margin-top: 8px;
+  background: #f8fafc;
+  padding: 12px;
+  border-radius: 8px;
+}
+.code {
+  background: #0f172a;
+  color: #e6edf3;
+  padding: 8px;
+  border-radius: 6px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Courier New", monospace;
+  white-space: pre;
+  font-size: 0.9rem;
+}
+.small {
+  font-size: 0.85rem;
+  margin-left: 8px;
+}
+.message {
+  color: #b91c1c;
+  font-weight: 600;
+}
+.speedLabel {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.recursionViz {
+  margin-top: 16px;
+  background: #f8fafc;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+.recursionViz h2 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #1f2937;
+}
+.callStack {
+  background: #0f172a;
+  color: #e6edf3;
+  padding: 16px;
+  border-radius: 6px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Courier New", monospace;
+  font-size: 0.9rem;
+  max-height: 400px;
+  overflow-y: auto;
+  line-height: 1.8;
+}
+.callItem {
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+.activeCall {
+  background: #fbbf2433;
+  border-left: 3px solid #f59e0b;
+  padding-left: 5px;
+  animation: pulse 1s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% {
+    background: #fbbf2433;
+  }
+  50% {
+    background: #fbbf2466;
+  }
+}
+.callText {
+  color: #94a3b8;
+}
+.activeCall .callText {
+  color: #fbbf24;
+  font-weight: 600;
+}
+.noActive {
+  color: #64748b;
+  font-style: italic;
+}
+.progressInfo {
+  margin-top: 12px;
+  font-size: 0.9rem;
+  color: #64748b;
+  text-align: right;
+}

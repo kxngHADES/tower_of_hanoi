@@ -1,0 +1,58 @@
+.rodWrap {
+  width: 140px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+.selected {
+  outline: 3px solid #f59e0b33;
+  border-radius: 6px;
+}
+.rod {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+.pole {
+  position: absolute;
+  bottom: 28px;
+  width: 6px;
+  height: 160px;
+  background: #4b5563;
+  border-radius: 4px;
+  z-index: 0;
+}
+.base {
+  width: 100%;
+  height: 8px;
+  background: #374151;
+  position: absolute;
+  bottom: 0;
+  border-radius: 4px;
+}
+.stack {
+  width: 100%;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding-bottom: 6px;
+}
+.spacer {
+  height: 18px;
+  width: 1px;
+  opacity: 0;
+}
+.label {
+  margin-top: 8px;
+  font-size: 0.85rem;
+  color: #374151;
+}
